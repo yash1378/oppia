@@ -26,6 +26,7 @@ jobs:
         run: |
           python3 -m venv oppia-venv
           source oppia-venv/bin/activate
+          echo "VIRTUAL_ENV=oppia-venv" >> oppia-venv/bin/activate
           sudo python -m scripts.install_third_party_libs
 
       - name: Start Oppia
