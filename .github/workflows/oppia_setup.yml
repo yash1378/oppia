@@ -3,7 +3,7 @@ name: Oppia Docker Compose Workflow
 on:
   push:
     branches:
-      - main  # Replace with the branch you want to trigger the workflow
+      - new  # Replace with the branch you want to trigger the workflow
 
 jobs:
   build:
