@@ -13,9 +13,13 @@ jobs:
       - name: Set up Python and Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip python3-setuptools curl openjdk-8-jre git python3-dev python3-yaml python3-matplotlib unzip libbz2-dev
-          python3 -m pip install --upgrade pip
+          sudo apt-get install -y python3-venv python3-pip python3-setuptools curl openjdk-8-jre git python3-dev python3-yaml python3-matplotlib unzip libbz2-dev
           python3 -m pip install pyyaml
+
+      - name: Create and Activate Virtual Environment
+        run: |
+          python3 -m venv oppia-venv
+          source oppia-venv/bin/activate
 
       - name: Clone Oppia
         run: |
@@ -23,17 +27,30 @@ jobs:
           cd oppia
           git remote add upstream https://github.com/oppia/oppia.git
 
+      - name: Install Oppia Dependencies
+        run: |
+          python -m scripts.install_third_party_libs
+
       - name: Start Oppia
         run: |
-          python3 -m scripts.start &
+          python -m scripts.start &
           sleep 10  # Adjust sleep time based on your Oppia startup time
 
       - name: Wait for localhost:8181
         run: |
-          until $(curl --output /dev/null --silent --head --fail http://localhost:8181); do
-            echo "Waiting for Oppia to start..."
+          retries=0
+          max_retries=30
+          until $(curl --output /dev/null --silent --head --fail http://localhost:8181) || [ $retries -eq $max_retries ]; do
+            echo "Waiting for Oppia to start... (Retry: $((retries++)))"
             sleep 5
           done
+
+          if [ $retries -eq $max_retries ]; then
+            echo "Oppia did not start within the expected time."
+            exit 1
+          else
+            echo "Oppia started successfully!"
+          fi
 
       - name: Run Tests or Other Tasks
         run: |
@@ -42,7 +59,7 @@ jobs:
       - name: Shutdown Oppia
         run: |
           # Perform graceful shutdown, Ctrl+C simulation
-          pkill -f "python -m scripts.start" || true
+          pkill -f "python -m scripts.start"
 
           # Wait for Oppia to shut down gracefully
           sleep 10
