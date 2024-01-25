@@ -1,9 +1,9 @@
-name: Docker Workflow
+name: Oppia Docker Compose Workflow
 
 on:
   push:
     branches:
-      - new  # Update with the branch you want to trigger the workflow
+      - main  # Replace with the branch you want to trigger the workflow
 
 jobs:
   build:
@@ -13,13 +13,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Build Oppia Docker Image
+      - name: Build and Run Oppia Docker Compose
         run: |
-          docker build -t gwendis/oppia:latest .
-
-      - name: Start Oppia Development Server
-        run: |
-          docker run -d -p 8181:8181 --name oppia-dev oppia:latest
+          docker-compose build
+          docker-compose up -d  # Start the containers in the background
 
       - name: Wait for Oppia to Start
         run: |
@@ -32,6 +29,6 @@ jobs:
         run: |
           # Add your test commands or other tasks here
 
-      - name: Stop Oppia Development Server
+      - name: Stop Oppia Docker Compose
         run: |
-          docker stop oppia-dev
+          docker-compose down
