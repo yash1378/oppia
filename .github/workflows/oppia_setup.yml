@@ -29,7 +29,7 @@ jobs:
 
       - name: Install Oppia Dependencies
         run: |
-          python -m scripts.install_third_party_libs
+          sudo python -m scripts.install_third_party_libs
 
       - name: Start Oppia
         run: |
