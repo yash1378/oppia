@@ -22,13 +22,6 @@ jobs:
           cd oppia
           git remote add upstream https://github.com/oppia/oppia.git
 
-      - name: Install Oppia Dependencies
-        run: |
-          python3 -m venv oppia-venv
-          source oppia-venv/bin/activate
-          echo "VIRTUAL_ENV=oppia-venv" >> oppia-venv/bin/activate
-          sudo python -m scripts.install_third_party_libs
-
       - name: Start Oppia
         run: |
           python -m scripts.start &
