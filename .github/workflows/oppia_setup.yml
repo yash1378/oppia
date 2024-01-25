@@ -16,11 +16,6 @@ jobs:
           sudo apt-get install -y python3-venv python3-pip python3-setuptools curl openjdk-8-jre git python3-dev python3-yaml python3-matplotlib unzip libbz2-dev
           python3 -m pip install pyyaml
 
-      - name: Create and Activate Virtual Environment
-        run: |
-          python3 -m venv oppia-venv
-          source oppia-venv/bin/activate
-
       - name: Clone Oppia
         run: |
           git clone https://github.com/yash1378/oppia.git
@@ -29,6 +24,8 @@ jobs:
 
       - name: Install Oppia Dependencies
         run: |
+          python3 -m venv oppia-venv
+          source oppia-venv/bin/activate
           sudo python -m scripts.install_third_party_libs
 
       - name: Start Oppia
