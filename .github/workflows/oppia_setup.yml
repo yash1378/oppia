@@ -14,6 +14,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-pip python3-setuptools curl openjdk-8-jre git python3-dev python3-yaml python3-matplotlib unzip libbz2-dev
+          python3 -m pip install --upgrade pip
           python3 -m pip install pyyaml
 
       - name: Clone Oppia
@@ -24,7 +25,7 @@ jobs:
 
       - name: Start Oppia
         run: |
-          python -m scripts.start &
+          python3 -m scripts.start &
           sleep 10  # Adjust sleep time based on your Oppia startup time
 
       - name: Wait for localhost:8181
@@ -41,7 +42,7 @@ jobs:
       - name: Shutdown Oppia
         run: |
           # Perform graceful shutdown, Ctrl+C simulation
-          pkill -f "python -m scripts.start"
+          pkill -f "python -m scripts.start" || true
 
           # Wait for Oppia to shut down gracefully
           sleep 10
