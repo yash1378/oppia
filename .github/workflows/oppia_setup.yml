@@ -15,7 +15,7 @@ jobs:
 
       - name: Build Oppia Docker Image
         run: |
-          docker build -t oppia:latest .
+          docker build -t gwendis/oppia:latest .
 
       - name: Start Oppia Development Server
         run: |
