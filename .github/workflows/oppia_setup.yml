@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Remove Existing Volumes and Containers
+        run: |
+          docker-compose down -v
+          docker-compose rm -v
+
       - name: Build and Run Oppia Docker Compose
         run: |
           docker-compose build
