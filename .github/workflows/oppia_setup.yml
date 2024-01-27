@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -26,7 +25,7 @@ jobs:
       -name: Run docker Compose
        run: |
           docker-compose up -d
-          
+
       - name: Wait for Oppia to Start
         run: |
           echo "Oppia has started. Printing logs:"
