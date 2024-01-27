@@ -20,10 +20,10 @@ jobs:
       - name: Build and Run Oppia Docker Compose
         run: |
           docker-compose build
-          docker compose up angular-build -d
+          docker-compose up angular-build -d
           
-      -name: Run docker Compose
-       run: |
+      - name: Run docker Compose  # Corrected the syntax here
+        run: |
           docker-compose up -d
 
       - name: Wait for Oppia to Start
