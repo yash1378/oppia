@@ -1,3 +1,5 @@
+name: Oppia Docker Compose Workflow
+
 on:
   push:
     branches:
@@ -28,8 +30,8 @@ jobs:
             echo "Waiting for Oppia to start..."
             sleep 5
           done
-          echo "Oppia has started. Printing logs:"
-          docker-compose logs
+          # echo "Oppia has started. Printing logs:"
+          # docker-compose logs
 
       - name: Stop Oppia Docker Compose
         run: |
