@@ -14,29 +14,29 @@ jobs:
 
       - name: Remove Existing Volumes and Containers
         run: |
-          docker-compose down -v
-          docker-compose rm -v
+          docker compose down -v
+          docker compose rm -v
 
       - name: Build and Run Oppia Docker Compose
         run: |
-          docker-compose build
-          docker-compose up angular-build -d
+          docker compose build
+          docker compose up angular-build -d
           
       - name: Run docker Compose  # Corrected the syntax here
         run: |
-          docker-compose up -d
+          docker compose up -d
 
       - name: Wait for Oppia to Start
         run: |
           echo "Oppia has started. Printing logs:"
-          docker-compose logs
+          docker compose logs
           until $(curl --output /dev/null --silent --head --fail http://127.0.0.1:8181); do
             echo "Waiting for Oppia to start..."
             sleep 5
           done
           echo "Oppia has started. Printing logs:"
-          docker-compose logs
+          docker compose logs
 
       - name: Stop Oppia Docker Compose
         run: |
-          docker-compose down
+          docker compose down
