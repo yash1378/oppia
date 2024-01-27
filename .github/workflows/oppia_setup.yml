@@ -22,8 +22,11 @@ jobs:
         run: |
           docker-compose build
           docker compose up angular-build -d
-          docker-compose up -d  # Start the containers in the background
-
+          
+      -name: Run docker Compose
+       run: |
+          docker-compose up -d
+          
       - name: Wait for Oppia to Start
         run: |
           echo "Oppia has started. Printing logs:"
