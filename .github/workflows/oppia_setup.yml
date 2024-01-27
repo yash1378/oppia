@@ -1,5 +1,3 @@
-name: Oppia Docker Compose Workflow
-
 on:
   push:
     branches:
@@ -21,7 +19,6 @@ jobs:
       - name: Build and Run Oppia Docker Compose
         run: |
           docker-compose build
-          docker compose up angular-build -d
           docker-compose up -d  # Start the containers in the background
 
       - name: Wait for Oppia to Start
@@ -30,6 +27,8 @@ jobs:
             echo "Waiting for Oppia to start..."
             sleep 5
           done
+          echo "Oppia has started. Printing logs:"
+          docker-compose logs
 
       - name: Stop Oppia Docker Compose
         run: |
